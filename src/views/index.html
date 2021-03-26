@@ -1,0 +1,19 @@
+{% extends 'layouts/base.html' %}
+
+{% block titulo %}
+    Inicio
+{% endblock %}
+
+{% block contenido %} 
+<h1 class="mb-3">Recortador de url</h1>
+<div class="container">
+<form action="{{ url_for('index') }}" method="post">
+    <div class="mb-3">
+        <label for="url">Url:</label>
+        <input type="text" class="form-control" id="url" name="url" value="{{local}}{{url}}">
+    </div>
+    <button type="submit" class="btn btn-primary">Recortar</button>
+</form>
+</div>
+
+{% endblock %}
