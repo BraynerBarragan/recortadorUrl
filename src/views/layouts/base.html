@@ -9,7 +9,41 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
 </head>
 <body>
+    <nav class="bg-dark p-3">
+        <ul class="nav justify-content-center">
+            <li class="nav-item"><a class="nav-link" href="{{url_for('index')}}">Inicio</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{url_for('checkIn')}}">Registrarse</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{url_for('login')}}">Acceder</a></li>
+            
+        </ul>
+    </nav>
+
+
     <div class="container">
+        {% with messages = get_flashed_messages( category_filter=['danger'] ) %}
+        {% if messages %}
+        <div class="alert alert-danger my-0 shadow-sm p-3 mb-5" role="alert">
+          {% for message in messages %}
+        
+              {{ message }}
+            
+          {% endfor %}
+          
+        </div>
+        {% endif %}
+        {% endwith %}
+        {% with messages = get_flashed_messages( category_filter=['success'] ) %}
+        {% if messages %}
+        <div class="alert alert-success my-0 shadow-sm p-3 mb-5" role="alert">
+          {% for message in messages %}
+        
+              {{ message }}
+            
+          {% endfor %}
+          
+        </div>
+        {% endif %}
+        {% endwith %}
         {% block contenido %}{% endblock %}
     </div>
     
