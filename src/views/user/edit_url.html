@@ -1,0 +1,21 @@
+{% extends 'layouts/base.html' %}
+
+{% block titulo %}
+    Editar
+{% endblock %}
+
+{% block contenido %} 
+<h2 class="my-3">Editar para la url recortada: <a href="http://localhost:5000/{{url[3]}}" target="_blank">http://localhost:5000/{{url[3]}}</a></h2>
+<div class="container">
+    <form action="{{ url_for('edit', url=url.3)}}" method="POST">
+        <div class="mb-3">
+            <label for="url">Url:</label>
+            <input type="text" class="form-control" id="url" name="url"  placeholder="Ingrese nueva url">
+        </div>
+
+        <button class="btn btn-primary" type="submit">Guardar</button>
+
+    </form>
+</div>
+
+{% endblock %}

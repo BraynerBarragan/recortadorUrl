@@ -22,3 +22,17 @@ class UsersModel():
         cursor.close()
 
         return user
+
+    def check(self, date, email):
+        cursor = DB.cursor()
+        cursor.execute('update users set date_check = ? where email = ?',(date, email,))
+        cursor.close()
+
+    def checkDate(self, email):
+        cursor = DB.cursor()
+        cursor.execute('select date_check from users where email = ?',(email,))
+        date = cursor.fetchone()
+        cursor.close()
+
+        return date
+

@@ -10,10 +10,19 @@
 </head>
 <body>
     <nav class="bg-dark p-3">
+        
         <ul class="nav justify-content-center">
+            
             <li class="nav-item"><a class="nav-link" href="{{url_for('index')}}">Inicio</a></li>
-            <li class="nav-item"><a class="nav-link" href="{{url_for('checkIn')}}">Registrarse</a></li>
-            <li class="nav-item"><a class="nav-link" href="{{url_for('login')}}">Acceder</a></li>
+            {% if session['user'] %}
+                
+                <li class="nav-item"><a href="{{url_for('urls')}}" class="nav-link">Mis urls</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{url_for('logout')}}">Cerrar seccion</a></li>
+                <h3 class="text-white mx-4">{{ session['user']['name'] }}</h3>
+            {% else %}
+                <li class="nav-item"><a class="nav-link" href="{{url_for('checkIn')}}">Registrarse</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{url_for('login')}}">Acceder</a></li>
+            {% endif %}
             
         </ul>
     </nav>

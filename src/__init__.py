@@ -1,6 +1,7 @@
 from flask import Flask, render_template
 app = Flask(__name__, template_folder='views')
 # importar controllers
+app.secret_key ='CBZEkZPmgsPdrA3sVEb2PLu1p'
 from src.controllers import *
 
 

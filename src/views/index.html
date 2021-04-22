@@ -7,10 +7,10 @@
 {% block contenido %} 
 <h1 class="mb-3">Recortador de url</h1>
 <div class="container">
-<form action="{{ url_for('index') }}" method="post">
+<form action="{{ url_for('index') }}" method="POST">
     <div class="mb-3">
         <label for="url">Url:</label>
-        <input type="text" class="form-control" id="url" name="url" value="{{local}}{{url}}">
+        <input type="text" class="form-control" id="url" name="url" value="{{local}}{{url}}" required>
     </div>
     <button type="submit" class="btn btn-primary">Recortar</button>
 </form>

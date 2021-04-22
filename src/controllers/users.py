@@ -1,10 +1,11 @@
-from flask import render_template, request, redirect, url_for, flash
+from flask import render_template, request, redirect, url_for, flash, session
 from src import app
 from flask_mail import Mail, Message
 from src.models.users import UsersModel
 from hashlib import md5
 from src.config.send import mail
-app.secret_key ='CBZEkZPmgsPdrA3sVEb2PLu1p'
+import datetime
+
 
 @app.route('/user/checkIn', methods=['GET','POST'])
 def checkIn():
@@ -26,10 +27,12 @@ def checkIn():
 
         with app.app_context():
 
-            msg = Message(subject="HOLA",sender="barrcam37@gmail.com", recipients=[email], body="Ya estas registrado")
+            msg = Message(subject="Por verificar para poder accerder",sender="barrcam37@gmail.com", recipients=[email], html='<button><a href="http://localhost:5000/user/check/{}">Verificar</a></button>'.format(email))
+          
+            #msg.html='<button><a href="http://localhost:5000/user/check/{}">Verificar</a></button>'.format(email)
             mail.send(msg)
-        
-        flash('Registrado correctamente...','success')
+
+        flash('Registrado correctamente... Verifique su correo electronico para poder acceder','success')
 
         return redirect(url_for('login'))
         
@@ -41,7 +44,13 @@ def checkIn():
             flash('Ya existe un usuario registrado con ese correo', 'danger') 
         return redirect(request.url)
         
-
+@app.route('/user/check/<email>')
+def check(email):
+    date= datetime.datetime.now()
+    usersModel = UsersModel()
+    usersModel.check(date, email)
+    print(date)
+    return render_template('user/login.html')
 
 @app.route('/user/login', methods=['GET','POST'])
 def login():
@@ -55,12 +64,26 @@ def login():
     usersModel = UsersModel()
     user = usersModel.consultlogin(email, password)
 
-    print(user)
+    #print(user)
     if user == None:
         flash('Usuario o contraseña incorrecta...','danger')
         return redirect(request.url)
+    
+    date = usersModel.checkDate(email)
+    #print(date[0])
+    if date[0] is None :
+        flash('No se ha verificado el correo...','danger')
+        return redirect(request.url)
+    
+    session['user'] = {'id': user[0], 'name': user[1]}
+    print(session['user']['name'])
+    
     flash('Ingreso correcto','success')
     return redirect(url_for('index'))
 
-
+@app.route('/user/logout', methods=['GET','POST'])
+def logout():
+    session.pop('user', None)
+    #del session['user']
+    return redirect(url_for('index'))
 
