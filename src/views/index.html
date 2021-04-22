@@ -10,7 +10,7 @@
 <form action="{{ url_for('index') }}" method="POST">
     <div class="mb-3">
         <label for="url">Url:</label>
-        <input type="text" class="form-control" id="url" name="url" value="{{local}}{{url}}" required>
+        <input type="text" class="form-control" id="url" name="url" placeholder="Acorta tu enlace" value="{{local}}{{url}}" required>
     </div>
     <button type="submit" class="btn btn-primary">Recortar</button>
 </form>

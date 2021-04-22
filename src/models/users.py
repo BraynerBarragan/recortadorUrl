@@ -15,7 +15,7 @@ class UsersModel():
         return user
 
 
-    def consultlogin(self, email, password):
+    def consultLogin(self, email, password):
         cursor = DB.cursor()
         cursor.execute('select * from users where email = ? and password = ?',(email, password,))
         user = cursor.fetchone()
@@ -23,16 +23,10 @@ class UsersModel():
 
         return user
 
-    def check(self, date, email):
+    def insertDate(self, date, email):
         cursor = DB.cursor()
         cursor.execute('update users set date_check = ? where email = ?',(date, email,))
         cursor.close()
 
-    def checkDate(self, email):
-        cursor = DB.cursor()
-        cursor.execute('select date_check from users where email = ?',(email,))
-        date = cursor.fetchone()
-        cursor.close()
-
-        return date
+    
 
